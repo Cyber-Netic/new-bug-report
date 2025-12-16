@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bug Report</title>
+  <meta name="description" content="Generate a bug report JSON file and GitHub-friendly Markdown from a static form." />
+  <link rel="stylesheet" href="bug-report.css" />
+</head>
+<body>
+  <main class="page">
+    <div class="container">
+      <header class="header">
+        <h1>Bug Report</h1>
+        <p class="helper">
+          Fill out the form to generate a bug report file you can attach to an email or GitHub issue.
+        </p>
+      </header>
+
+      <section id="savedBanner" class="banner" hidden role="status" aria-live="polite">
+        <div class="banner__text">
+          <strong>Loaded last saved report from this browser</strong>
+          <span class="banner__sub">You can load it into the preview anytime.</span>
+        </div>
+        <div class="banner__actions">
+          <button id="loadSavedBtn" type="button" class="btn btn--ghost">Load into preview</button>
+          <button id="dismissBannerBtn" type="button" class="btn btn--ghost" aria-label="Dismiss banner">Dismiss</button>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="formTitle">
+        <h2 id="formTitle" class="sr-only">Bug report form</h2>
+
+        <form id="bugForm" novalidate>
+          <div class="grid">
+            <div class="field">
+              <label for="date">Date <span class="req" aria-hidden="true">*</span></label>
+              <input id="date" name="date" type="date" required />
+              <p class="error" id="dateError" role="alert" aria-live="polite"></p>
+            </div>
+
+            <div class="field">
+              <label for="time">Time <span class="req" aria-hidden="true">*</span></label>
+              <input id="time" name="time" type="time" required />
+              <p class="error" id="timeError" role="alert" aria-live="polite"></p>
+            </div>
+
+            <div class="field field--full">
+              <label for="title">Title <span class="req" aria-hidden="true">*</span></label>
+              <input
+                id="title"
+                name="title"
+                type="text"
+                required
+                maxlength="80"
+                placeholder="Short summary"
+                autocomplete="off"
+              />
+              <div class="meta">
+                <span class="hint">Max 80 characters.</span>
+                <span class="count" id="titleCount" aria-live="polite">0/80</span>
+              </div>
+              <p class="error" id="titleError" role="alert" aria-live="polite"></p>
+            </div>
+
+            <div class="field field--full">
+              <label for="description">Description <span class="req" aria-hidden="true">*</span></label>
+              <textarea
+                id="description"
+                name="description"
+                required
+                maxlength="2000"
+                placeholder="Steps to reproduce, expected vs actual, environment..."
+                rows="7"
+              ></textarea>
+              <div class="meta">
+                <span class="hint">Max 2000 characters.</span>
+                <span class="count" id="descCount" aria-live="polite">0/2000</span>
+              </div>
+              <p class="error" id="descError" role="alert" aria-live="polite"></p>
+            </div>
+
+            <div class="field field--full">
+              <label for="screenshot">Screenshot attachment (optional)</label>
+              <input id="screenshot" name="screenshot" type="file" accept="image/*" />
+              <div id="fileInfo" class="fileinfo" hidden>
+                <div class="fileinfo__row">
+                  <div class="fileinfo__text" id="fileText"></div>
+                  <button id="removeShotBtn" type="button" class="btn btn--small btn--ghost">
+                    Remove screenshot
+                  </button>
+                </div>
+                <figure class="preview" aria-label="Screenshot preview">
+                  <img id="shotPreview" alt="Selected screenshot preview" />
+                </figure>
+              </div>
+              <p class="error" id="shotError" role="alert" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn--primary" type="submit">Submit</button>
+            <button class="btn" type="reset">Reset</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="results" class="card" hidden aria-labelledby="resultsTitle">
+        <div class="results__top">
+          <h2 id="resultsTitle">Results</h2>
+          <p id="statusMsg" class="status" role="status" aria-live="polite"></p>
+        </div>
+
+        <div class="results__actions">
+          <button id="downloadBtn" type="button" class="btn btn--primary" disabled>Download report.json</button>
+          <button id="copyBtn" type="button" class="btn" disabled>Copy Markdown</button>
+        </div>
+
+        <div class="divider" role="presentation"></div>
+
+        <section aria-labelledby="previewTitle">
+          <h3 id="previewTitle">Preview (read-only)</h3>
+          <div id="preview" class="previewGrid"></div>
+        </section>
+      </section>
+
+      <footer class="footer">
+        <p class="footer__text">
+          Tip: Attach the downloaded <strong>report.json</strong> to your email or GitHub issue. You can also paste the
+          copied Markdown into a GitHub issue description.
+        </p>
+      </footer>
+    </div>
+  </main>
+
+  <script src="bug-report.js"></script>
+</body>
+</html>
