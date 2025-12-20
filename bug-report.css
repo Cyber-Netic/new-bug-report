@@ -1,6 +1,23 @@
 :root {
+  --bg: #0b1020;
+  --card: #101a33;
+  --field: #0c182e;
+  --text: #e5e7eb;
+  --muted: #aab4c0;
+  --border: rgba(148, 163, 184, 0.22);
+  --shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+  --primary: #60a5fa;
+  --primaryText: #081226;
+  --danger: #f87171;
+  --success: #4ade80;
+  --focus: 3px solid rgba(96, 165, 250, 0.55);
+  --banner: rgba(96, 165, 250, 0.14);
+}
+
+:root[data-theme="light"] {
   --bg: #f6f7fb;
   --card: #ffffff;
+  --field: #ffffff;
   --text: #0f172a;
   --muted: #475569;
   --border: #e2e8f0;
@@ -10,22 +27,7 @@
   --danger: #dc2626;
   --success: #16a34a;
   --focus: 3px solid rgba(37, 99, 235, 0.45);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0b1020;
-    --card: #101a33;
-    --text: #e5e7eb;
-    --muted: #aab4c0;
-    --border: rgba(148, 163, 184, 0.22);
-    --shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
-    --primary: #60a5fa;
-    --primaryText: #081226;
-    --danger: #f87171;
-    --success: #4ade80;
-    --focus: 3px solid rgba(96, 165, 250, 0.55);
-  }
+  --banner: rgba(37, 99, 235, 0.08);
 }
 
 *,
@@ -61,8 +63,16 @@ body {
   margin-bottom: 16px;
 }
 
+.header__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
 .header h1 {
-  margin: 0 0 8px;
+  margin: 0;
   font-size: 34px;
   letter-spacing: -0.02em;
 }
@@ -90,7 +100,7 @@ body {
   padding: 14px 16px;
   border-radius: 14px;
   border: 1px solid var(--border);
-  background: rgba(37, 99, 235, 0.08);
+  background: var(--banner);
 }
 
 .banner__text {
@@ -141,7 +151,7 @@ input, textarea {
   padding: 12px 12px;
   border-radius: 12px;
   border: 1px solid var(--border);
-  background: transparent;
+  background: var(--field);
   color: var(--text);
   outline: none;
 }
@@ -233,6 +243,24 @@ textarea[aria-invalid="true"] {
   padding: 8px 10px;
   border-radius: 10px;
   font-size: 13px;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.theme-toggle__icon {
+  font-size: 16px;
+  line-height: 1;
 }
 
 .fileinfo {

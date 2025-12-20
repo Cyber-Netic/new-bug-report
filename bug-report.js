@@ -34,7 +34,35 @@
   const loadSavedBtn = $("#loadSavedBtn");
   const dismissBannerBtn = $("#dismissBannerBtn");
 
+  const themeToggle = $("#themeToggle");
+  const themeToggleIcon = $("#themeToggleIcon");
+  const themeToggleText = $("#themeToggleText");
+
   let lastReport = null;
+
+  function getCurrentTheme() {
+    const attr = document.documentElement.getAttribute("data-theme");
+    return attr === "light" || attr === "dark" ? attr : "dark";
+  }
+
+  function updateThemeToggle(theme) {
+    const isDark = theme === "dark";
+    if (themeToggleIcon) themeToggleIcon.textContent = isDark ? "🌙" : "☀️";
+    if (themeToggleText) themeToggleText.textContent = isDark ? "Dark" : "Light";
+    themeToggle.setAttribute("aria-pressed", String(isDark));
+    themeToggle.setAttribute("aria-label", `Switch to ${isDark ? "light" : "dark"} theme`);
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.style.colorScheme = theme;
+    try {
+      localStorage.setItem("theme", theme);
+    } catch (_) {
+      // ignore storage errors
+    }
+    updateThemeToggle(theme);
+  }
 
   function bytesToHuman(bytes) {
     if (!Number.isFinite(bytes)) return "";
@@ -395,6 +423,14 @@
   });
 
   // Init
+  if (themeToggle) {
+    const initialTheme = getCurrentTheme();
+    updateThemeToggle(initialTheme);
+    themeToggle.addEventListener("click", () => {
+      const nextTheme = getCurrentTheme() === "dark" ? "light" : "dark";
+      applyTheme(nextTheme);
+    });
+  }
   updateCounts();
   clearErrors();
   resetScreenshotUI();
