@@ -5,13 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bug Report</title>
   <meta name="description" content="Generate a bug report JSON file and GitHub-friendly Markdown from a static form." />
+  <script>
+    (() => {
+      try {
+        const stored = localStorage.getItem("theme");
+        const theme = stored === "light" || stored === "dark" ? stored : "dark";
+        document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.style.colorScheme = theme;
+      } catch (_) {
+        document.documentElement.setAttribute("data-theme", "dark");
+        document.documentElement.style.colorScheme = "dark";
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="bug-report.css" />
 </head>
 <body>
   <main class="page">
     <div class="container">
       <header class="header">
-        <h1>Bug Report</h1>
+        <div class="header__top">
+          <h1>Bug Report</h1>
+          <button
+            id="themeToggle"
+            class="theme-toggle"
+            type="button"
+            aria-pressed="true"
+            aria-label="Switch to light theme"
+          >
+            <span class="theme-toggle__icon" id="themeToggleIcon" aria-hidden="true">🌙</span>
+            <span class="theme-toggle__text" id="themeToggleText">Dark</span>
+          </button>
+        </div>
         <p class="helper">
           Fill out the form to generate a bug report file you can attach to an email or GitHub issue.
         </p>
